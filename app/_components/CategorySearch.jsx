@@ -3,11 +3,12 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Input } from "@/components/ui/input";
-import { Link, Search } from 'lucide-react';
+import { Search } from 'lucide-react';
+import Link from 'next/link';
 import GlobalApi from '../_Utils/GlobalApi';
 
 function CategorySearch() {
-const [categoryList,setategoryList] = useState([])
+const [categoryList,setcategoryList] = useState([])
 
     useEffect(() => {
         getCategoryList();
@@ -17,7 +18,7 @@ const [categoryList,setategoryList] = useState([])
         GlobalApi.getCategory()
             .then(resp => {
                 console.log(resp.data.data);
-                setategoryList(resp.data.data)
+                setcategoryList(resp.data.data)
             })
             .catch(error => {
                 console.error("Error fetching category list:", error);
@@ -42,12 +43,19 @@ const [categoryList,setategoryList] = useState([])
             </div>
             {/* Display all categories */}
             <div className='grid grid-cols-3 mt-5 md:grid-cols-4 lg:grid-cols-6'>
-            {categoryList.map((item,index)=>index<6 &&(
-                <div key={index} className='flex flex-col text-center items-center p-5 m-2  bg-blue-50 gap-2 rounded-lg hover:scale-100 transition-all ease-in-out'>
+            {categoryList.length>0?categoryList.map((item,index)=>index<6 &&(
+                <Link href={'/Search/'+item.attributes.Name}key={index} className='flex flex-col text-center items-center p-5 m-2  bg-blue-50 gap-2 rounded-lg hover:scale-100 transition-all ease-in-out'>
                     <Image src={item.attributes?.Icon?.data.attributes?.url} alt='icon' height={40} width={40}/>
                     <label className='text-blue-600 text-sm'>{item?.attributes?.Name}</label>
-                </div>
-            ))}
+                </Link>
+            )):
+            [1,2,3,4,5,6].map((item,index)=>(
+            <div className='h-[130px] w-[120px] m-2 bg-slate-200 animate-pulse  rounded-lg '>
+
+            </div>
+            ))
+            
+        }
             </div>
             
         </div>

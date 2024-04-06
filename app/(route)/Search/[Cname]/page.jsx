@@ -19,7 +19,7 @@ const Search = ({ params }) => {
     GlobalApi.getDoctorsByCategory(params.Cname)
       .then(resp => {
         console.log(resp);
-        setDoctorsList(resp.data.list);
+        setDoctorsList(resp.data.data);
         setLoading(false);
         setError(null);
       })
@@ -31,7 +31,7 @@ const Search = ({ params }) => {
   };
 
   return (
-    <div>
+    <div className='mt-5'>
       {loading ? (
         <p>Loading...</p>
       ) : error ? (

@@ -42,11 +42,11 @@ const [categoryList,setcategoryList] = useState([])
                 </Button>
             </div>
             {/* Display all categories */}
-            <div className='grid grid-cols-3 mt-5 md:grid-cols-4 lg:grid-cols-6'>
+            <div  className='grid grid-cols-3 mt-8 md:grid-cols-4 lg:grid-cols-6'>
             {categoryList.length>0?categoryList.map((item,index)=>index<6 &&(
-                <Link href={'/Search/'+item.attributes.Name}key={index} className='flex flex-col text-center items-center p-5 m-2  bg-blue-50 gap-2 rounded-lg hover:scale-100 transition-all ease-in-out'>
-                    <Image src={item.attributes?.Icon?.data.attributes?.url} alt='icon' height={40} width={40}/>
-                    <label className='text-blue-600 text-sm'>{item?.attributes?.Name}</label>
+                <Link  key={index} href={'/Search/'+item.attributes.Name} className='flex flex-col text-center items-center p-5 m-2  bg-blue-50 gap-2 rounded-lg hover:scale-300 transition-all ease-in-out'>
+                    <Image src={item.attributes?.Icon?.data.attributes?.url} alt='icon' height={90} width={90}/>
+                    <label className='text-blue-800 text-sm'>{item?.attributes?.Name}</label>
                 </Link>
             )):
             [1,2,3,4,5,6].map((item,index)=>(

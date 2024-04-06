@@ -3,9 +3,9 @@ import CategoryList from './_components/CategoryList'
 const layout = ({children}) => {
   return (
     <div className='grid grid-cols-4'>
-      <div>
+      <div className='hidden md:block'>
         {/* category */}
-    <CategoryList/>
+    <CategoryList />
 
       </div>
       <div className='col-span-3'>

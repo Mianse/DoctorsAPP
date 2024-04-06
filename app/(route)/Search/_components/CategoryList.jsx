@@ -1,5 +1,6 @@
 "use client"
 import React, { useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
 import  Link  from 'next/link';
 import Image from 'next/image';
 import {
@@ -17,6 +18,8 @@ import GlobalApi from '../../../_Utils/GlobalApi';
 
 const CategoryList = () => {
     const [categoryList, setCategoryList] = useState([]);
+    const params = usePathname()
+    const category = params.split('/')[2]
 
     useEffect(() => {
         getCategoryList();
@@ -34,19 +37,19 @@ const CategoryList = () => {
     }
 
     return (
-        <div className='h-screen fixed mt-8 flex flex-col'>
+        <div className='h-screen fixed mt-5 flex flex-col'>
         <Command>
             <CommandInput placeholder="Type a command or search..." />
             <CommandList className='overflow-visible'>
                 <CommandEmpty>No results found.</CommandEmpty>
                 <CommandGroup heading="Suggestions">
     {categoryList && categoryList.map((item, index) => (
-    <CommandItem key={index}>
-        <Link href={''} className='p-2 flex gap-2 text-[12px] text-blue-6 rounded-md cursor-pointer w-full'>
+    <div key={index}>
+    <Link href={'/Search/'+item?.attributes?.Name} className={`p-4 flex gap-4 text-[16px] text-blue-800 rounded-md items-center cursor-pointer w-full ${category==item.attributes.Name&&'bg-blue-100'}`}>
             <Image  alt='icon' src={item.attributes?.Icon?.data.attributes?.url} width={25} height={25}/>
-            <label>{item.attributes.Name}</label>
+            <label className='text-blue-800 text-md'>{item.attributes.Name}</label>
         </Link>
-    </CommandItem>
+    </div>
 ))}
 
 

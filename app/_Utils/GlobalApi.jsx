@@ -10,8 +10,9 @@ const axiosClient = axios.create({
 
 const getCategory = () => axiosClient.get('/categories?populate=*');
 const getDoctorsList =()=> axiosClient.get('/doctors?populate=*')
-
+const getDoctorsByCategory =(category)=> axiosClient.get('/doctors?filters[categories][Name][$in]='+category+'&populate=*');
 export default {
     getCategory,
-    getDoctorsList
+    getDoctorsList,
+    getDoctorsByCategory
 };

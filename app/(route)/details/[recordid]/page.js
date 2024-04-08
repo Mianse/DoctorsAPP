@@ -1,6 +1,19 @@
+'use client'
+import GlobalApi from '@/app/_Utils/GlobalApi'
 import React from 'react'
+import  { useState ,useEffect} from 'react'
 
-const details = () => {
+const Details = ({params}) => {
+  useEffect(()=>{
+    getDoctorById(params.recordId)
+  },[params])
+  const getDoctorById = (doctorId)=>{
+
+    GlobalApi.getDoctorById(doctorId).then(resp=>{
+      console.log(resp)
+    })
+  }
+
   return (
     <div>
       details
@@ -8,4 +21,4 @@ const details = () => {
   )
 }
 
-export default details
+export default Details

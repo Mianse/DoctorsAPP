@@ -6,9 +6,9 @@ function DoctorsList({ doctorsList, heading = 'Popular Doctors' }) {
     console.log('Doctors List:', doctorsList); // Debugging: Log doctorsList to console
 
     return (
-        <div className='mb-10 px-10 '>
+        <div className='mb-10 px-10 items-center '>
             <h2 className='font-bold text-xl'>{heading}</h2>
-            <div className='grid grid-cols-2 sm:grid-cols-2 gap-7 mt-4 md:grid-cols-3 lg:grid-cols-4'>
+            <div className='grid grid-cols-2 sm:grid-cols-2 gap-7 mt-4 md:grid-cols-3 lg:grid-cols-4 w-[1000px] '>
                 {doctorsList && doctorsList.length > 0 ? (
                     doctorsList.map((doctor, index) => (
                         <div key={index} className="border-[1px] rounded-lg p-3 cursor-pointer hover:border-primary hover:shadow-sm transition-all ease-in-out">

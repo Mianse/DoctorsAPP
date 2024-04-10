@@ -12,9 +12,11 @@ const getCategory = () => axiosClient.get('/categories?populate=*');
 const getDoctorsList =()=> axiosClient.get('/doctors?populate=*')
 const getDoctorsByCategory =(category)=> axiosClient.get('/doctors?filters[categories][Name][$in]='+category+'&populate=*');
 const getDoctorById = (id)=> axiosClient.get(`/doctors/${id}?populate=*`)
+const booKAppointment = ()=> axiosClient.post(`/appointments`,data)
 export default {
     getCategory,
     getDoctorsList,
     getDoctorsByCategory,
-    getDoctorById
+    getDoctorById,
+    booKAppointment
 };

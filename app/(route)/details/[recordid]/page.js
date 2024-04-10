@@ -2,6 +2,7 @@
 import GlobalApi from '@/app/_Utils/GlobalApi'
 import React, { useState, useEffect } from 'react'
 import DoctorDetails from '../_components/DoctorDetails'
+import DoctorSuggestionList from '../_components/DoctorSuggestionList'
 
 const Details = ({ params }) => {
   const [doctor, setDoctor] = useState();
@@ -26,17 +27,19 @@ const Details = ({ params }) => {
   }
 
   return (
-    <div className='p-2 md:px-20 flex flex-col items-center w-full'>
-      <h2 className='font-bold text-[22px]'>Details</h2>
-      <div className='grid grid-cols-4 md:grid-cols-4'>
-        {/* Doctor details */}
-      {doctor && <DoctorDetails doctor= {doctor} />}
-        {/* doctors suggestions */}
-        <div>
-
-        </div>
-      </div>
+    <div className='p-2 md:px-20 flex flex-col items-center'>
+  <h2 className='font-bold text-[22px] mb-4'>Details</h2>
+  <div className='grid grid-cols-1 md:grid-cols-4 gap-4 w-full'>
+    {/* Doctor details */}
+    {doctor && <DoctorDetails doctor={doctor} />}
+    {/* doctors suggestions */}
+    <div className="md:col-span-3">
+      {/* Content for doctor suggestions */}
+      <DoctorSuggestionList />
     </div>
+  </div>
+</div>
+
   );
 }
 

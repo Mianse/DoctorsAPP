@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button'
 import { Clock } from 'lucide-react'
 import {
@@ -12,29 +12,55 @@ import {
   DialogClose
 } from "@/components/ui/dialog"
 import { Calendar } from '@/components/ui/calendar'
-import { useState, useEffect } from 'react';
-import { useKindeBrowserClient } from '@kinde-oss/kinde-auth-nextjs'
+import { Textarea } from "@/components/ui/textarea"
+import { toast } from "sonner"
+
+
+import GlobalApi from '@/app/_Utils/GlobalApi';
+import { useKindeBrowserClient } from '@kinde-oss/kinde-auth-nextjs';
+
+
 
 const BookAppointment = ({ doctor }) => {
 
   const [date, setDate] = useState(new Date())
   const [timeSlot, setTimeSlot] = useState()
   const [selectedTimeSlot, setSelectedTimeSlot] = useState()
-  const { user } = useKindeBrowserClient()
+  const [note, setNote] = useState('')
 
-  useEffect(() => {
-    getTime()
-  }, [])
+  const {user} =  useKindeBrowserClient();
+   
+  const SaveBooking=()=>{
 
-  const saveBooking = () => {
     const data = {
-      data: {}
-    }
+        data:{
+            userName: user.given_name + " " + user.family_name,
+            Email: user.email,
+            Time: selectedTimeSlot,
+            Date: date,
+            doctor: doctor.id,
+            Note: note
+        }
+        
+      }
+      GlobalApi.booKAppointment(data).then(resp => {
+        console.log(resp)
+        if (resp) {
+            console.log(data);
+          toast("message sent via email")
+        }
+      })
   }
+  
+  
 
   const isPastDay = (day) => {
     return day <= new Date();
   }
+
+  useEffect(() => {
+    getTime()
+  }, [])
 
   const getTime = () => {
     const timeList = []
@@ -60,7 +86,7 @@ const BookAppointment = ({ doctor }) => {
   }
 
   return (
-    <Dialog>
+    <Dialog className="w-120 h-auto">
       <DialogTrigger>
         <Button className="mt-3 rounded-full">
           Book Appointment
@@ -91,7 +117,7 @@ const BookAppointment = ({ doctor }) => {
                   <Clock className='text-primary h-5 w-5' />
                   Select Time Slot
                 </h2>
-                <div className='grid grid-cols-3 gap-3 border rounded-lg p-3'>
+                <div className='grid grid-cols-5 gap-5 border rounded-lg p-3'>
                   {timeSlot && timeSlot?.map((item, index) => (
                     <h2 className={`p-2 border hover:bg-primary rounded-full text-center cursor-pointer hover:text-white ${item.time == selectedTimeSlot && 'bg-primary text-white'}`} onClick={() => setSelectedTimeSlot(item.time)} key={index}>{item.time}</h2>
                   ))}
@@ -99,12 +125,13 @@ const BookAppointment = ({ doctor }) => {
               </div>
             </div>
           </DialogDescription>
+          <Textarea placeholder="Type your message here." value={note} onChange={e => setNote(e.target.value)} />
         </DialogHeader>
         <DialogFooter className='sm:justify-end'>
           <DialogClose>
             <>
               <Button className='text-red-500 border-red-500' type="submit" variant='secondary'>Close</Button>
-              <Button type="button" className='text-white bg-primary' variant='primary' disabled={!(date && selectedTimeSlot)}>Submit</Button>
+              <Button type="button" className='text-white bg-primary p-5' onClick={SaveBooking} variant='primary' disabled={!(date && selectedTimeSlot)}>Submit</Button>
             </>
           </DialogClose>
         </DialogFooter>

@@ -47,6 +47,9 @@ const BookAppointment = ({ doctor }) => {
         console.log(resp)
         if (resp) {
             console.log(data);
+           GlobalApi.sendEMail(data).then(resp =>{
+            console.log(resp)
+           })
           toast("message sent via email")
         }
       })
